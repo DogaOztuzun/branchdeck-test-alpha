@@ -1,5 +1,6 @@
-// Capitalize first letter — but has a bug: crashes on empty string
+// Capitalize first letter
 function formatName(name) {
+  if (!name) return '';
   return name[0].toUpperCase() + name.slice(1);
 }
 
