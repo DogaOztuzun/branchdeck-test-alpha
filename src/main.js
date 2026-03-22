@@ -2,4 +2,5 @@ function greet(name) {
   return `Hello, ${name}!`;
 }
 
-module.exports = { greet };
+// Wrong export name - CI will fail
+module.exports = { sayHello: greet };
