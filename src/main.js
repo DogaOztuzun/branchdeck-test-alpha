@@ -2,4 +2,5 @@ function greet(name) {
   return `Hello, ${name}!`;
 }
 
-module.exports = { greet };
+// Typo: exporting wrong name
+module.exports = { greetUser: greet };
