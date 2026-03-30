@@ -11,3 +11,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: node -e "const f = require('./src/main.js'); const r = f.greet('world'); if (r !== 'Hello, world!') process.exit(1)"
+      - run: node tests/math.test.js
