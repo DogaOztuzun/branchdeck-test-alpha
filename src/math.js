@@ -158,3 +158,27 @@ function median(arr) {
 }
 
 module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median };
+
+function round(value, decimals) {
+  if (typeof value !== 'number') {
+    throw new Error('Value must be a number');
+  }
+  
+  if (decimals !== undefined && typeof decimals !== 'number') {
+    throw new Error('Decimals must be a number');
+  }
+  
+  if (Number.isNaN(value)) {
+    return NaN;
+  }
+  
+  if (value === Infinity || value === -Infinity) {
+    return value;
+  }
+  
+  const dec = decimals !== undefined ? Math.max(0, Math.floor(decimals)) : 0;
+  const factor = Math.pow(10, dec);
+  return Math.round(value * factor) / factor;
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round };
