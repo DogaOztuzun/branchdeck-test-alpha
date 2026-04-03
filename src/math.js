@@ -278,3 +278,34 @@ function ceil(value) {
 }
 
 module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor, ceil };
+
+/**
+ * Returns the sign of a number.
+ * @param {number} value - The number to check.
+ * @returns {number} -1 for negative, 0 for zero, 1 for positive.
+ * @example
+ * sign(-5);    // => -1
+ * sign(0);     // => 0
+ * sign(3.14);  // => 1
+ */
+function sign(value) {
+  if (typeof value !== 'number') {
+    throw new Error('Parameter must be a number');
+  }
+
+  if (Number.isNaN(value)) {
+    return NaN;
+  }
+
+  if (value === 0) {
+    return 0;
+  }
+
+  if (value > 0) {
+    return 1;
+  }
+
+  return -1;
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor, ceil, sign };

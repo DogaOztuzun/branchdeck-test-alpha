@@ -1,4 +1,4 @@
-const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor, ceil } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor, ceil, sign } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -137,3 +137,14 @@ if (failed > 0) {
 } else {
   console.log(`\nAll ${passed} tests passed`);
 }
+
+// sign tests
+assertEqual(sign(5), 1, 'sign(5) should be 1');
+assertEqual(sign(-5), -1, 'sign(-5) should be -1');
+assertEqual(sign(0), 0, 'sign(0) should be 0');
+assertEqual(sign(-0), 0, 'sign(-0) should be 0');
+assertEqual(sign(3.14), 1, 'sign(3.14) should be 1');
+assertEqual(sign(-3.14), -1, 'sign(-3.14) should be -1');
+assertEqual(Number.isNaN(sign(NaN)), true, 'sign(NaN) should be NaN');
+assertThrows(() => sign('5'), 'sign(string) should throw');
+assertThrows(() => sign(undefined), 'sign(undefined) should throw');
