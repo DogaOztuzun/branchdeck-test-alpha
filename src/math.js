@@ -47,4 +47,20 @@ function absoluteValue(a, b) {
   return Math.abs(a - b);
 }
 
-module.exports = { subtract, divide, multiply, power, absoluteValue };
+function max(a, b) {
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    throw new Error('Both parameters must be numbers');
+  }
+  
+  if (Number.isNaN(a) || Number.isNaN(b)) {
+    return NaN;
+  }
+  
+  if (a === b) {
+    return a;
+  }
+  
+  return a > b ? a : b;
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue, max };
