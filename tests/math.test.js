@@ -1,4 +1,4 @@
-const { subtract, divide, multiply, power, absoluteValue, max, min } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max, min, modulo } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -104,6 +104,16 @@ assertEqual(min(-0.5, -0.1), -0.5, 'min(-0.5, -0.1) should return -0.5');
 assertThrows(() => min('a', 2), 'min(string, 2) should throw');
 assertThrows(() => min(2, 'b'), 'min(2, string) should throw');
 assertThrows(() => min('a', 'b'), 'min(string, string) should throw');
+
+// modulo tests
+assertEqual(modulo(10, 3), 1, 'modulo(10, 3) should return 1');
+assertEqual(modulo(10, 2), 0, 'modulo(10, 2) should return 0');
+assertEqual(modulo(-10, 3), -1, 'modulo(-10, 3) should return -1');
+assertEqual(modulo(0, 5), 0, 'modulo(0, 5) should return 0');
+assertEqual(modulo(7, 7), 0, 'modulo(7, 7) should return 0');
+assertEqual(modulo(1, 2), 1, 'modulo(1, 2) should return 1');
+assertThrows(() => modulo(10, 0), 'modulo(10, 0) should throw');
+assertThrows(() => modulo(0, 0), 'modulo(0, 0) should throw');
 
 console.log(`Tests: ${passed} passed, ${failed} failed`);
 
