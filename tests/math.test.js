@@ -1,4 +1,4 @@
-const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor, ceil } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -119,17 +119,17 @@ assertThrows(() => abs('5'), 'abs(string) should throw');
 assertThrows(() => abs(undefined), 'abs(undefined) should throw');
 
 
-// floor tests
-assertEqual(floor(3.7), 3, 'floor(3.7) should be 3');
-assertEqual(floor(-3.7), -4, 'floor(-3.7) should be -4');
-assertEqual(floor(3), 3, 'floor(3) should be 3');
-assertEqual(floor(0), 0, 'floor(0) should be 0');
-assertEqual(floor(-0), -0, 'floor(-0) should be -0');
-assertEqual(Number.isNaN(floor(NaN)), true, 'floor(NaN) should be NaN');
-assertEqual(floor(Infinity), Infinity, 'floor(Infinity) should be Infinity');
-assertEqual(floor(-Infinity), -Infinity, 'floor(-Infinity) should be -Infinity');
-assertThrows(() => floor('3.7'), 'floor(string) should throw');
-assertThrows(() => floor(undefined), 'floor(undefined) should throw');
+// ceil tests
+assertEqual(ceil(3.2), 4, 'ceil(3.2) should be 4');
+assertEqual(ceil(-3.2), -3, 'ceil(-3.2) should be -3');
+assertEqual(ceil(3), 3, 'ceil(3) should be 3');
+assertEqual(ceil(0), 0, 'ceil(0) should be 0');
+assertEqual(ceil(-0), -0, 'ceil(-0) should be -0');
+assertEqual(Number.isNaN(ceil(NaN)), true, 'ceil(NaN) should be NaN');
+assertEqual(ceil(Infinity), Infinity, 'ceil(Infinity) should be Infinity');
+assertEqual(ceil(-Infinity), -Infinity, 'ceil(-Infinity) should be -Infinity');
+assertThrows(() => ceil('3.2'), 'ceil(string) should throw');
+assertThrows(() => ceil(undefined), 'ceil(undefined) should throw');
 
 if (failed > 0) {
   console.log(`\n${failed} test(s) failed`);
