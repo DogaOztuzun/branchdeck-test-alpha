@@ -1,0 +1,12 @@
+{
+  "name": "repo-alpha",
+  "version": "1.0.0",
+  "description": "Test repo for Branchdeck PR Shepherd testing",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "node tests/math.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

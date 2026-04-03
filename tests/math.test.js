@@ -1,4 +1,4 @@
-const { subtract, divide, multiply, power, absoluteValue } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -70,6 +70,23 @@ assertEqual(absoluteValue(10, 10), 0, 'absoluteValue(10, 10) should return 0');
 assertEqual(absoluteValue(100, 50), 50, 'absoluteValue(100, 50) should return 50');
 assertThrows(() => absoluteValue('a', 2), 'absoluteValue(string, 2) should throw');
 assertThrows(() => absoluteValue(2, 'b'), 'absoluteValue(2, string) should throw');
+
+// max tests
+assertEqual(max(5, 3), 5, 'max(5, 3) should return 5');
+assertEqual(max(3, 5), 5, 'max(3, 5) should return 5');
+assertEqual(max(-5, -3), -3, 'max(-5, -3) should return -3');
+assertEqual(max(-3, 5), 5, 'max(-3, 5) should return 5');
+assertEqual(max(5, 5), 5, 'max(5, 5) should return 5');
+assertEqual(max(0, 0), 0, 'max(0, 0) should return 0');
+assertEqual(max(10, -100), 10, 'max(10, -100) should return 10');
+assertEqual(max(-100, 10), 10, 'max(-100, 10) should return 10');
+assertEqual(max(0, 5), 5, 'max(0, 5) should return 5');
+assertEqual(max(5, 0), 5, 'max(5, 0) should return 5');
+assertEqual(max(3.14, 2.71), 3.14, 'max(3.14, 2.71) should return 3.14');
+assertEqual(max(-0.5, -0.1), -0.1, 'max(-0.5, -0.1) should return -0.1');
+assertThrows(() => max('a', 2), 'max(string, 2) should throw');
+assertThrows(() => max(2, 'b'), 'max(2, string) should throw');
+assertThrows(() => max('a', 'b'), 'max(string, string) should throw');
 
 console.log(`Tests: ${passed} passed, ${failed} failed`);
 
