@@ -63,4 +63,20 @@ function max(a, b) {
   return a > b ? a : b;
 }
 
-module.exports = { subtract, divide, multiply, power, absoluteValue, max };
+function min(a, b) {
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    throw new Error('Both parameters must be numbers');
+  }
+  
+  if (Number.isNaN(a) || Number.isNaN(b)) {
+    return NaN;
+  }
+  
+  if (a === b) {
+    return a;
+  }
+  
+  return a < b ? a : b;
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue, max, min };

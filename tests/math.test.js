@@ -1,4 +1,4 @@
-const { subtract, divide, multiply, power, absoluteValue, max } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max, min } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -87,6 +87,23 @@ assertEqual(max(-0.5, -0.1), -0.1, 'max(-0.5, -0.1) should return -0.1');
 assertThrows(() => max('a', 2), 'max(string, 2) should throw');
 assertThrows(() => max(2, 'b'), 'max(2, string) should throw');
 assertThrows(() => max('a', 'b'), 'max(string, string) should throw');
+
+// min tests
+assertEqual(min(5, 3), 3, 'min(5, 3) should return 3');
+assertEqual(min(3, 5), 3, 'min(3, 5) should return 3');
+assertEqual(min(-5, -3), -5, 'min(-5, -3) should return -5');
+assertEqual(min(-3, 5), -3, 'min(-3, 5) should return -3');
+assertEqual(min(5, 5), 5, 'min(5, 5) should return 5');
+assertEqual(min(0, 0), 0, 'min(0, 0) should return 0');
+assertEqual(min(10, -100), -100, 'min(10, -100) should return -100');
+assertEqual(min(-100, 10), -100, 'min(-100, 10) should return -100');
+assertEqual(min(0, 5), 0, 'min(0, 5) should return 0');
+assertEqual(min(5, 0), 0, 'min(5, 0) should return 0');
+assertEqual(min(3.14, 2.71), 2.71, 'min(3.14, 2.71) should return 2.71');
+assertEqual(min(-0.5, -0.1), -0.5, 'min(-0.5, -0.1) should return -0.5');
+assertThrows(() => min('a', 2), 'min(string, 2) should throw');
+assertThrows(() => min(2, 'b'), 'min(2, string) should throw');
+assertThrows(() => min('a', 'b'), 'min(string, string) should throw');
 
 console.log(`Tests: ${passed} passed, ${failed} failed`);
 
