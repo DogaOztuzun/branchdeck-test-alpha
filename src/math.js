@@ -80,3 +80,21 @@ function min(a, b) {
 }
 
 module.exports = { subtract, divide, multiply, power, absoluteValue, max, min };
+
+function abs(x) {
+  if (typeof x !== 'number') {
+    throw new Error('Parameter must be a number');
+  }
+  
+  if (Number.isNaN(x)) {
+    return NaN;
+  }
+  
+  if (x === Infinity || x === -Infinity) {
+    return Infinity;
+  }
+  
+  return Math.abs(x);
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs };
