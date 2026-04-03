@@ -122,3 +122,39 @@ function clamp(value, min, max) {
 }
 
 module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp };
+
+function median(arr) {
+  if (!Array.isArray(arr)) {
+    throw new Error('Parameter must be an array');
+  }
+  
+  if (arr.length === 0) {
+    throw new Error('Array must not be empty');
+  }
+  
+  // Validate all elements are numbers
+  for (let i = 0; i < arr.length; i++) {
+    if (typeof arr[i] !== 'number') {
+      throw new Error('All array elements must be numbers');
+    }
+  }
+  
+  // Handle single element
+  if (arr.length === 1) {
+    return arr[0];
+  }
+  
+  // Sort a copy of the array
+  const sorted = [...arr].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  
+  // Odd length: return middle element
+  if (sorted.length % 2 !== 0) {
+    return sorted[mid];
+  }
+  
+  // Even length: return average of two middle elements
+  return (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median };

@@ -1,4 +1,4 @@
-const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -132,6 +132,20 @@ assertThrows(() => clamp('5', 0, 10), 'clamp(string, 0, 10) should throw');
 assertThrows(() => clamp(5, '0', 10), 'clamp(5, string, 10) should throw');
 assertThrows(() => clamp(5, 0, '10'), 'clamp(5, 0, string) should throw');
 assertThrows(() => clamp(undefined, 0, 10), 'clamp(undefined, 0, 10) should throw');
+
+// median tests
+assertEqual(median([5]), 5, 'median([5]) should be 5');
+assertEqual(median([1, 2, 3]), 2, 'median([1, 2, 3]) should be 2');
+assertEqual(median([1, 2, 3, 4]), 2.5, 'median([1, 2, 3, 4]) should be 2.5');
+assertEqual(median([3, 1, 2]), 2, 'median([3, 1, 2]) should be 2 (unsorted)');
+assertEqual(median([10, 20, 30, 40, 50]), 30, 'median([10, 20, 30, 40, 50]) should be 30');
+assertEqual(median([-5, -1, -10]), -5, 'median([-5, -1, -10]) should be -5');
+assertEqual(median([1.5, 2.5, 3.5]), 2.5, 'median([1.5, 2.5, 3.5]) should be 2.5');
+assertEqual(median([0, 0, 0]), 0, 'median([0, 0, 0]) should be 0');
+assertThrows(() => median([]), 'median([]) should throw');
+assertThrows(() => median('not array'), 'median(string) should throw');
+assertThrows(() => median([1, '2', 3]), 'median([1, string, 3]) should throw');
+assertThrows(() => median([1, undefined, 3]), 'median([1, undefined, 3]) should throw');
 
 if (failed > 0) {
   console.log(`\n${failed} test(s) failed`);
