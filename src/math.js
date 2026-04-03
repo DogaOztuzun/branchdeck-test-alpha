@@ -200,3 +200,21 @@ function floor(value) {
 }
 
 module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor };
+
+function ceil(value) {
+  if (typeof value !== 'number') {
+    throw new Error('Parameter must be a number');
+  }
+  
+  if (Number.isNaN(value)) {
+    return NaN;
+  }
+  
+  if (value === Infinity || value === -Infinity) {
+    return value;
+  }
+  
+  return Math.ceil(value);
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor, ceil };
