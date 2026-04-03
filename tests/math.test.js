@@ -1,4 +1,4 @@
-const { subtract, divide, multiply, power, absoluteValue, max, min, abs } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -118,6 +118,24 @@ assertEqual(abs(-Infinity), Infinity, 'abs(-Infinity) should be Infinity');
 assertThrows(() => abs('5'), 'abs(string) should throw');
 assertThrows(() => abs(undefined), 'abs(undefined) should throw');
 
+
+// clamp tests
+assertEqual(clamp(5, 0, 10), 5, 'clamp(5, 0, 10) should be 5');
+assertEqual(clamp(-5, 0, 10), 0, 'clamp(-5, 0, 10) should be 0');
+assertEqual(clamp(15, 0, 10), 10, 'clamp(15, 0, 10) should be 10');
+assertEqual(clamp(0, 0, 10), 0, 'clamp(0, 0, 10) should be 0');
+assertEqual(clamp(10, 0, 10), 10, 'clamp(10, 0, 10) should be 10');
+assertEqual(clamp(5, 10, 0), 5, 'clamp(5, 10, 0) should swap and return 5');
+assertEqual(Number.isNaN(clamp(NaN, 0, 10)), true, 'clamp(NaN, 0, 10) should be NaN');
+assertEqual(Number.isNaN(clamp(5, NaN, 10)), true, 'clamp(5, NaN, 10) should be NaN');
+assertThrows(() => clamp('5', 0, 10), 'clamp(string, 0, 10) should throw');
+assertThrows(() => clamp(5, '0', 10), 'clamp(5, string, 10) should throw');
+assertThrows(() => clamp(5, 0, '10'), 'clamp(5, 0, string) should throw');
+assertThrows(() => clamp(undefined, 0, 10), 'clamp(undefined, 0, 10) should throw');
+
 if (failed > 0) {
+  console.log(`\n${failed} test(s) failed`);
   process.exit(1);
+} else {
+  console.log(`\nAll ${passed} tests passed`);
 }

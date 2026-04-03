@@ -98,3 +98,27 @@ function abs(x) {
 }
 
 module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs };
+
+function clamp(value, min, max) {
+  if (typeof value !== 'number' || typeof min !== 'number' || typeof max !== 'number') {
+    throw new Error('All parameters must be numbers');
+  }
+  
+  if (Number.isNaN(value) || Number.isNaN(min) || Number.isNaN(max)) {
+    return NaN;
+  }
+  
+  // Swap min and max if min > max
+  let actualMin = min;
+  let actualMax = max;
+  if (min > max) {
+    actualMin = max;
+    actualMax = min;
+  }
+  
+  if (value < actualMin) return actualMin;
+  if (value > actualMax) return actualMax;
+  return value;
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp };
