@@ -119,17 +119,18 @@ assertThrows(() => abs('5'), 'abs(string) should throw');
 assertThrows(() => abs(undefined), 'abs(undefined) should throw');
 
 
-// ceil tests
-assertEqual(ceil(3.2), 4, 'ceil(3.2) should be 4');
-assertEqual(ceil(-3.2), -3, 'ceil(-3.2) should be -3');
-assertEqual(ceil(3), 3, 'ceil(3) should be 3');
-assertEqual(ceil(0), 0, 'ceil(0) should be 0');
-assertEqual(ceil(-0), -0, 'ceil(-0) should be -0');
-assertEqual(Number.isNaN(ceil(NaN)), true, 'ceil(NaN) should be NaN');
-assertEqual(ceil(Infinity), Infinity, 'ceil(Infinity) should be Infinity');
-assertEqual(ceil(-Infinity), -Infinity, 'ceil(-Infinity) should be -Infinity');
-assertThrows(() => ceil('3.2'), 'ceil(string) should throw');
-assertThrows(() => ceil(undefined), 'ceil(undefined) should throw');
+// round tests
+assertEqual(round(3.14159), 3, 'round(3.14159) should be 3');
+assertEqual(round(3.5), 4, 'round(3.5) should be 4');
+assertEqual(round(-3.5), -3, 'round(-3.5) should be -3');
+assertEqual(round(3.14159, 2), 3.14, 'round(3.14159, 2) should be 3.14');
+assertEqual(round(3.14159, 0), 3, 'round(3.14159, 0) should be 3');
+assertEqual(Number.isNaN(round(NaN)), true, 'round(NaN) should be NaN');
+assertEqual(round(Infinity), Infinity, 'round(Infinity) should be Infinity');
+assertEqual(round(-Infinity), -Infinity, 'round(-Infinity) should be -Infinity');
+assertThrows(() => round('3.14'), 'round(string) should throw');
+assertThrows(() => round(3.14, '2'), 'round(3.14, string) should throw');
+assertThrows(() => round(undefined), 'round(undefined) should throw');
 
 if (failed > 0) {
   console.log(`\n${failed} test(s) failed`);
