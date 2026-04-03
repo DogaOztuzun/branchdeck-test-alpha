@@ -1,4 +1,4 @@
-const { subtract, divide, multiply, power, absoluteValue } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -70,6 +70,21 @@ assertEqual(absoluteValue(10, 10), 0, 'absoluteValue(10, 10) should return 0');
 assertEqual(absoluteValue(100, 50), 50, 'absoluteValue(100, 50) should return 50');
 assertThrows(() => absoluteValue('a', 2), 'absoluteValue(string, 2) should throw');
 assertThrows(() => absoluteValue(2, 'b'), 'absoluteValue(2, string) should throw');
+
+// max tests
+assertEqual(max(5, 3), 5, 'max(5, 3) should return 5');
+assertEqual(max(3, 5), 5, 'max(3, 5) should return 5');
+assertEqual(max(-5, -3), -3, 'max(-5, -3) should return -3');
+assertEqual(max(0, 0), 0, 'max(0, 0) should return 0');
+assertEqual(max(-10, 5), 5, 'max(-10, 5) should return 5');
+assertEqual(max(5, -10), 5, 'max(5, -10) should return 5');
+assertEqual(max(7, 7), 7, 'max(7, 7) should return 7');
+assertThrows(() => max('a', 2), 'max(string, 2) should throw');
+assertThrows(() => max(2, 'b'), 'max(2, string) should throw');
+assertThrows(() => max(NaN, 2), 'max(NaN, 2) should throw');
+assertThrows(() => max(2, NaN), 'max(2, NaN) should throw');
+assertThrows(() => max(Infinity, 2), 'max(Infinity, 2) should throw');
+assertThrows(() => max(2, -Infinity), 'max(2, -Infinity) should throw');
 
 console.log(`Tests: ${passed} passed, ${failed} failed`);
 
