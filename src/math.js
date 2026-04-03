@@ -182,3 +182,21 @@ function round(value, decimals) {
 }
 
 module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round };
+
+function floor(value) {
+  if (typeof value !== 'number') {
+    throw new Error('Parameter must be a number');
+  }
+  
+  if (Number.isNaN(value)) {
+    return NaN;
+  }
+  
+  if (value === Infinity || value === -Infinity) {
+    return value;
+  }
+  
+  return Math.floor(value);
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor };
