@@ -1,4 +1,4 @@
-const { subtract, divide, multiply, power, absoluteValue, max, min } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max, min, abs } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -106,6 +106,17 @@ assertThrows(() => min(2, 'b'), 'min(2, string) should throw');
 assertThrows(() => min('a', 'b'), 'min(string, string) should throw');
 
 console.log(`Tests: ${passed} passed, ${failed} failed`);
+
+// abs tests
+assertEqual(abs(-5), 5, 'abs(-5) should be 5');
+assertEqual(abs(5), 5, 'abs(5) should be 5');
+assertEqual(abs(0), 0, 'abs(0) should be 0');
+assertEqual(abs(-0), 0, 'abs(-0) should be 0');
+assertEqual(Number.isNaN(abs(NaN)), true, 'abs(NaN) should be NaN');
+assertEqual(abs(Infinity), Infinity, 'abs(Infinity) should be Infinity');
+assertEqual(abs(-Infinity), Infinity, 'abs(-Infinity) should be Infinity');
+assertThrows(() => abs('5'), 'abs(string) should throw');
+assertThrows(() => abs(undefined), 'abs(undefined) should throw');
 
 if (failed > 0) {
   process.exit(1);
