@@ -1,4 +1,4 @@
-const { subtract, divide, power, absoluteValue } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -38,6 +38,13 @@ assertEqual(divide(0, 5), 0, 'divide(0, 5) should return 0');
 assertEqual(divide(7, 2), 3.5, 'divide(7, 2) should return 3.5');
 assertThrows(() => divide(10, 0), 'divide(10, 0) should throw');
 assertThrows(() => divide(0, 0), 'divide(0, 0) should throw');
+
+// multiply tests
+assertEqual(multiply(3, 4), 12, 'multiply(3, 4) should return 12');
+assertEqual(multiply(-2, 5), -10, 'multiply(-2, 5) should return -10');
+assertEqual(multiply(0, 100), 0, 'multiply(0, 100) should return 0');
+assertEqual(multiply(7, 8), 56, 'multiply(7, 8) should return 56');
+assertEqual(multiply(-3, -4), 12, 'multiply(-3, -4) should return 12');
 
 // power tests
 assertEqual(power(2, 3), 8, 'power(2, 3) should return 8');
