@@ -39,4 +39,12 @@ function power(a, b) {
   return Math.pow(a, b);
 }
 
-module.exports = { subtract, divide, multiply, power };
+function absoluteValue(a, b) {
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    throw new Error('Both parameters must be numbers');
+  }
+  
+  return Math.abs(a - b);
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue };

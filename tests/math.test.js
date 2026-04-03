@@ -1,4 +1,4 @@
-const { subtract, divide, power } = require('../src/math.js');
+const { subtract, divide, power, absoluteValue } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -52,6 +52,17 @@ assertThrows(() => power('a', 2), 'power(string, 2) should throw');
 assertThrows(() => power(2, 'b'), 'power(2, string) should throw');
 assertThrows(() => power(-4, 0.5), 'power(-4, 0.5) should throw');
 assertThrows(() => power(2, 2000), 'power(2, 2000) should throw');
+
+// absoluteValue tests
+assertEqual(absoluteValue(5, 3), 2, 'absoluteValue(5, 3) should return 2');
+assertEqual(absoluteValue(3, 5), 2, 'absoluteValue(3, 5) should return 2');
+assertEqual(absoluteValue(-5, -3), 2, 'absoluteValue(-5, -3) should return 2');
+assertEqual(absoluteValue(-3, 5), 8, 'absoluteValue(-3, 5) should return 8');
+assertEqual(absoluteValue(0, 0), 0, 'absoluteValue(0, 0) should return 0');
+assertEqual(absoluteValue(10, 10), 0, 'absoluteValue(10, 10) should return 0');
+assertEqual(absoluteValue(100, 50), 50, 'absoluteValue(100, 50) should return 50');
+assertThrows(() => absoluteValue('a', 2), 'absoluteValue(string, 2) should throw');
+assertThrows(() => absoluteValue(2, 'b'), 'absoluteValue(2, string) should throw');
 
 console.log(`Tests: ${passed} passed, ${failed} failed`);
 
