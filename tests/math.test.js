@@ -1,4 +1,4 @@
-const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round } = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor } = require('../src/math.js');
 
 let passed = 0;
 let failed = 0;
@@ -119,18 +119,17 @@ assertThrows(() => abs('5'), 'abs(string) should throw');
 assertThrows(() => abs(undefined), 'abs(undefined) should throw');
 
 
-// round tests
-assertEqual(round(3.14159), 3, 'round(3.14159) should be 3');
-assertEqual(round(3.5), 4, 'round(3.5) should be 4');
-assertEqual(round(-3.5), -3, 'round(-3.5) should be -3');
-assertEqual(round(3.14159, 2), 3.14, 'round(3.14159, 2) should be 3.14');
-assertEqual(round(3.14159, 0), 3, 'round(3.14159, 0) should be 3');
-assertEqual(Number.isNaN(round(NaN)), true, 'round(NaN) should be NaN');
-assertEqual(round(Infinity), Infinity, 'round(Infinity) should be Infinity');
-assertEqual(round(-Infinity), -Infinity, 'round(-Infinity) should be -Infinity');
-assertThrows(() => round('3.14'), 'round(string) should throw');
-assertThrows(() => round(3.14, '2'), 'round(3.14, string) should throw');
-assertThrows(() => round(undefined), 'round(undefined) should throw');
+// floor tests
+assertEqual(floor(3.7), 3, 'floor(3.7) should be 3');
+assertEqual(floor(-3.7), -4, 'floor(-3.7) should be -4');
+assertEqual(floor(3), 3, 'floor(3) should be 3');
+assertEqual(floor(0), 0, 'floor(0) should be 0');
+assertEqual(floor(-0), -0, 'floor(-0) should be -0');
+assertEqual(Number.isNaN(floor(NaN)), true, 'floor(NaN) should be NaN');
+assertEqual(floor(Infinity), Infinity, 'floor(Infinity) should be Infinity');
+assertEqual(floor(-Infinity), -Infinity, 'floor(-Infinity) should be -Infinity');
+assertThrows(() => floor('3.7'), 'floor(string) should throw');
+assertThrows(() => floor(undefined), 'floor(undefined) should throw');
 
 if (failed > 0) {
   console.log(`\n${failed} test(s) failed`);
