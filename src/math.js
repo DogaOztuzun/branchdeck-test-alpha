@@ -13,4 +13,30 @@ function multiply(a, b) {
   return a * b;
 }
 
-module.exports = { subtract, divide, multiply };
+function power(a, b) {
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    throw new Error('Both parameters must be numbers');
+  }
+  
+  if (b < 0) {
+    if (a === 0) throw new Error('Cannot raise 0 to a negative power');
+    return 1 / Math.pow(a, -b);
+  }
+  
+  if (a === 0) {
+    if (b === 0) throw new Error('Zero to the power of zero is undefined');
+    return 0;
+  }
+  
+  if (!Number.isInteger(b) && a < 0) {
+    throw new Error('Cannot calculate fractional power of negative number');
+  }
+  
+  if (b > 1000 || b < -1000) {
+    throw new Error('Exponent too large, potential overflow');
+  }
+  
+  return Math.pow(a, b);
+}
+
+module.exports = { subtract, divide, multiply, power };
