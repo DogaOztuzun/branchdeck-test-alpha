@@ -4,7 +4,7 @@
   "description": "Test repo for Branchdeck PR Shepherd testing",
   "main": "src/main.js",
   "scripts": {
-    "test": "node tests/math.test.js"
+    "test": "node tests/math.test.js && node tests/greet.test.js"
   },
   "keywords": [],
   "author": "",
