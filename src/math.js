@@ -309,3 +309,47 @@ function sign(value) {
 }
 
 module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor, ceil, sign };
+
+/**
+ * Summarizes a list of numbers with their count, minimum, maximum, mean and median.
+ * @param {number[]} numbers - The numbers to summarize.
+ * @returns {{count: number, min: number, max: number, mean: number, median: number}} - The count, minimum, maximum, mean and median of the numbers.
+ * @throws {Error} If the input is not a non-empty array of finite numbers.
+ * @example
+ * summarize([3, 1, 2]);
+ * // => { count: 3, min: 1, max: 3, mean: 2, median: 2 }
+ */
+function summarize(numbers) {
+  if (!Array.isArray(numbers)) {
+    throw new Error('Parameter must be an array');
+  }
+
+  if (numbers.length === 0) {
+    throw new Error('Array must not be empty');
+  }
+
+  for (let i = 0; i < numbers.length; i++) {
+    if (typeof numbers[i] !== 'number') {
+      throw new Error('All array elements must be numbers');
+    }
+
+    if (!Number.isFinite(numbers[i])) {
+      throw new Error('All array elements must be finite numbers');
+    }
+  }
+
+  // Sort a copy so the caller's array keeps its original order.
+  const sorted = [...numbers].sort((a, b) => a - b);
+  const count = numbers.length;
+  const total = numbers.reduce((sum, value) => sum + value, 0);
+
+  return {
+    count,
+    min: sorted[0],
+    max: sorted[count - 1],
+    mean: total / count,
+    median: median(sorted)
+  };
+}
+
+module.exports = { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor, ceil, sign, summarize };

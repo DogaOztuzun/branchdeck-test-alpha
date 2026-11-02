@@ -1,4 +1,5 @@
-const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor, ceil, sign } = require('../src/math.js');
+const math = require('../src/math.js');
+const { subtract, divide, multiply, power, absoluteValue, max, min, abs, clamp, median, round, floor, ceil, sign, summarize } = math;
 
 let passed = 0;
 let failed = 0;
@@ -21,6 +22,55 @@ function assertThrows(fn, message) {
     console.log(`FAIL: ${message} (expected throw, but did not)`);
   } catch (e) {
     passed++;
+  }
+}
+
+function assertThrowsError(fn, expectedMessage, message) {
+  try {
+    fn();
+    failed++;
+    console.log(`FAIL: ${message} (expected throw, but did not)`);
+  } catch (e) {
+    if (!(e instanceof Error)) {
+      failed++;
+      console.log(`FAIL: ${message} (expected an Error, but threw ${e})`);
+    } else if (e.message !== expectedMessage) {
+      failed++;
+      console.log(`FAIL: ${message}`);
+      console.log(`  Expected error message: ${expectedMessage}`);
+      console.log(`  Actual error message: ${e.message}`);
+    } else {
+      passed++;
+    }
+  }
+}
+
+function deepEqual(a, b) {
+  if (a === b || (Number.isNaN(a) && Number.isNaN(b))) {
+    return true;
+  }
+
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return a.length === b.length && a.every((value, index) => deepEqual(value, b[index]));
+  }
+
+  if (a && b && typeof a === 'object' && typeof b === 'object') {
+    const keysA = Object.keys(a);
+    const keysB = Object.keys(b);
+    return keysA.length === keysB.length && keysA.every((key) => deepEqual(a[key], b[key]));
+  }
+
+  return false;
+}
+
+function assertDeepEqual(actual, expected, message) {
+  if (deepEqual(actual, expected)) {
+    passed++;
+  } else {
+    failed++;
+    console.log(`FAIL: ${message}`);
+    console.log(`  Expected: ${JSON.stringify(expected)}`);
+    console.log(`  Actual: ${JSON.stringify(actual)}`);
   }
 }
 
@@ -139,6 +189,54 @@ assertEqual(sign(-3.14), -1, 'sign(-3.14) should be -1');
 assertEqual(Number.isNaN(sign(NaN)), true, 'sign(NaN) should be NaN');
 assertThrows(() => sign('5'), 'sign(string) should throw');
 assertThrows(() => sign(undefined), 'sign(undefined) should throw');
+
+// summarize tests
+assertDeepEqual(summarize([3, 1, 2]), { count: 3, min: 1, max: 3, mean: 2, median: 2 }, 'summarize([3, 1, 2]) should return count, min, max, mean and median');
+assertDeepEqual(summarize([4, 1, 3, 2]), { count: 4, min: 1, max: 4, mean: 2.5, median: 2.5 }, 'summarize([4, 1, 3, 2]) should return count, min, max, mean and median');
+assertDeepEqual(summarize([7]), { count: 1, min: 7, max: 7, mean: 7, median: 7 }, 'summarize([7]) should return count, min, max, mean and median');
+assertDeepEqual(summarize([5, 3, 9, 1]), { count: 4, min: 1, max: 9, mean: 4.5, median: 4 }, 'summarize should handle unsorted input');
+assertDeepEqual(summarize([-3, -1, -2]), { count: 3, min: -3, max: -1, mean: -2, median: -2 }, 'summarize should handle negative numbers');
+assertDeepEqual(summarize([-2, 0, 2]), { count: 3, min: -2, max: 2, mean: 0, median: 0 }, 'summarize should handle negative and positive numbers together');
+assertDeepEqual(summarize([2, 2, 2]), { count: 3, min: 2, max: 2, mean: 2, median: 2 }, 'summarize should handle duplicates');
+assertDeepEqual(summarize([1, 2, 2, 3]), { count: 4, min: 1, max: 3, mean: 2, median: 2 }, 'summarize should handle duplicates around the median');
+assertDeepEqual(summarize([1.5, 2.5]), { count: 2, min: 1.5, max: 2.5, mean: 2, median: 2 }, 'summarize should handle decimals');
+assertDeepEqual(summarize([2.5, 3.5, 4.5]), { count: 3, min: 2.5, max: 4.5, mean: 3.5, median: 3.5 }, 'summarize should handle decimals with an odd count');
+
+// summarize must leave the caller's array and its order alone
+const summarizeInput = [3, 1, 2];
+summarize(summarizeInput);
+assertDeepEqual(summarizeInput, [3, 1, 2], 'summarize should not modify or reorder the array it is given');
+
+// summarize must report exactly count, min, max, mean and median
+const summarizeKeys = Object.keys(summarize([3, 1, 2]));
+assertEqual(summarizeKeys.length, 5, 'summarize should return five properties');
+assertEqual(
+  ['count', 'min', 'max', 'mean', 'median'].every((key) => summarizeKeys.includes(key)),
+  true,
+  'summarize should return count, min, max, mean and median'
+);
+
+// summarize must not drop any of the exports that existed before it
+assertEqual(
+  ['subtract', 'divide', 'multiply', 'power', 'absoluteValue', 'max', 'min', 'abs', 'clamp', 'median', 'round', 'floor', 'ceil', 'sign']
+    .every((name) => typeof math[name] === 'function'),
+  true,
+  'every export that existed before summarize should still be exported'
+);
+assertEqual(typeof math.summarize, 'function', 'summarize should be exported');
+
+// summarize must reject input it cannot summarize, with the reason it rejects it
+assertThrowsError(() => summarize([]), 'Array must not be empty', 'summarize([]) should throw');
+assertThrowsError(() => summarize('abc'), 'Parameter must be an array', 'summarize(string) should throw');
+assertThrowsError(() => summarize(null), 'Parameter must be an array', 'summarize(null) should throw');
+assertThrowsError(() => summarize(undefined), 'Parameter must be an array', 'summarize(undefined) should throw');
+assertThrowsError(() => summarize({ 0: 3, length: 1 }), 'Parameter must be an array', 'summarize(object) should throw');
+assertThrowsError(() => summarize([1, '2']), 'All array elements must be numbers', 'summarize([number, string]) should throw');
+assertThrowsError(() => summarize([1, null]), 'All array elements must be numbers', 'summarize([number, null]) should throw');
+assertThrowsError(() => summarize([1, undefined]), 'All array elements must be numbers', 'summarize([number, undefined]) should throw');
+assertThrowsError(() => summarize([1, NaN]), 'All array elements must be finite numbers', 'summarize([number, NaN]) should throw');
+assertThrowsError(() => summarize([1, Infinity]), 'All array elements must be finite numbers', 'summarize([number, Infinity]) should throw');
+assertThrowsError(() => summarize([1, -Infinity]), 'All array elements must be finite numbers', 'summarize([number, -Infinity]) should throw');
 
 // The summary and the exit code stay at the very end of this file on purpose:
 // every assertion above has to run and be counted before the run is finalized.
