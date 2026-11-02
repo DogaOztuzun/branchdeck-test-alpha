@@ -105,8 +105,6 @@ assertThrows(() => min('a', 2), 'min(string, 2) should throw');
 assertThrows(() => min(2, 'b'), 'min(2, string) should throw');
 assertThrows(() => min('a', 'b'), 'min(string, string) should throw');
 
-console.log(`Tests: ${passed} passed, ${failed} failed`);
-
 // abs tests
 assertEqual(abs(-5), 5, 'abs(-5) should be 5');
 assertEqual(abs(5), 5, 'abs(5) should be 5');
@@ -131,13 +129,6 @@ assertEqual(ceil(-Infinity), -Infinity, 'ceil(-Infinity) should be -Infinity');
 assertThrows(() => ceil('3.2'), 'ceil(string) should throw');
 assertThrows(() => ceil(undefined), 'ceil(undefined) should throw');
 
-if (failed > 0) {
-  console.log(`\n${failed} test(s) failed`);
-  process.exit(1);
-} else {
-  console.log(`\nAll ${passed} tests passed`);
-}
-
 // sign tests
 assertEqual(sign(5), 1, 'sign(5) should be 1');
 assertEqual(sign(-5), -1, 'sign(-5) should be -1');
@@ -148,3 +139,14 @@ assertEqual(sign(-3.14), -1, 'sign(-3.14) should be -1');
 assertEqual(Number.isNaN(sign(NaN)), true, 'sign(NaN) should be NaN');
 assertThrows(() => sign('5'), 'sign(string) should throw');
 assertThrows(() => sign(undefined), 'sign(undefined) should throw');
+
+// The summary and the exit code stay at the very end of this file on purpose:
+// every assertion above has to run and be counted before the run is finalized.
+console.log(`Tests: ${passed} passed, ${failed} failed`);
+
+if (failed > 0) {
+  console.log(`\n${failed} test(s) failed`);
+  process.exitCode = 1;
+} else {
+  console.log(`\nAll ${passed} tests passed`);
+}
